@@ -31,10 +31,11 @@ public class cmdTest extends AdvancedCommand {
     @Override
     public void action(Object[] args, MessageReceivedEvent e, boolean successfully_casted) throws Exception {
         System.out.println(successfully_casted);
-        /*for (Object arg : args) {
+        System.out.println("Bool: " + (args[1] instanceof Boolean));
+        for (Object arg : args) {
             System.out.println(arg);
 
-        }*/
+        }
     }
 
     @Override

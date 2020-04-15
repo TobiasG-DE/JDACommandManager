@@ -25,7 +25,7 @@ public class Main {
         System.out.println("Starting...");
 
 
-        builder.setToken("NDg3MjkxNDE3MDAyMjQ2MTY1.Xo4lFQ.8AVg-VnOhXSJg9EzcKHCAcQxI5Q");
+        builder.setToken("NDg3MjkxNDE3MDAyMjQ2MTY1.XpXM1w.RAzGFTbtX-CrJ-EIziRZjGtdYZE");
         builder.setAutoReconnect(true);
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("auf BattleMC"));
