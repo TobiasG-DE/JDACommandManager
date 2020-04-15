@@ -23,6 +23,7 @@ public abstract class Command {
 
 
     private static final Color ERROR_COLOR = Color.RED;
+    private static final String FOOTHER_TEXT = "Command usage";
 
 
     private List<CommandArgument> arguments = new ArrayList<>();
@@ -32,6 +33,7 @@ public abstract class Command {
     private String invoke;
     private CommandHandler handler;
 
+    MessageReceivedEvent last_event;
 
     public Command(String invoke){
         this.invoke = invoke.toLowerCase();
@@ -101,7 +103,7 @@ public abstract class Command {
                 .setColor(ERROR_COLOR)
                 .setTitle("Error")
                 .setDescription(message)
-                .setFooter("Command Help/Usage",null));
+                .setFooter(FOOTHER_TEXT ,null));
     }
 
     protected EmbedBuilder help(){
@@ -127,7 +129,6 @@ public abstract class Command {
 
 
     public String getInvoke() {
-        System.out.println("return " + invoke);
         return invoke;
     }
 

@@ -1,6 +1,7 @@
 package com.mat345st.commands;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,62 +28,52 @@ public class CommandHandler {
     }
 
     public void handle(String[] args, MessageReceivedEvent event) {
-        System.out.println(args.length);
         String invoke = args[0].toLowerCase();
         args = Arrays.copyOfRange(args, 1, args.length);
 
-        /*for (String arg : args) {
-            System.out.println(arg);
-
-        }*/
-        //System.out.println("1 " + args.length);
-        System.out.println(invoke + " " + commands.size());
-        //System.out.println("1");
         if (commands.containsKey(invoke)) {
             Command c = commands.get(invoke);
-            //System.out.println("2");
 
             if (c.getChannelTypes().size()==0 || c.getChannelTypes().contains(event.getChannelType())) {
 
-          //      System.out.println("3");
 
-
+                c.last_event = event;
                 if (!(c instanceof AdvancedCommand)){
-            //        System.out.println("4");
                     if (!c.cancel(args, event)){
-              //          System.out.println("5");
+
                         try {
                             c.action(args, event);
-                //            System.out.println("6");
                         } catch (Exception e) {
                             System.err.println("An error occurred while executing the command " + c.getInvoke() + ": " + e.getMessage());
                             e.printStackTrace();
                         }
-                    }else {
+                    }else
                         c.error(args, event);
-                  //      System.out.println("7");
-                    }
                 }else {
                     AdvancedCommand ac = (AdvancedCommand) c;
 
-                    //System.out.println("8");
-                    if (!ac.cancel(args, event)){
-                      //  System.out.println("9");
-                        Object[] a = args;
-                        boolean sucess = true;
-                        try {
 
-                            getObjects(args, c);
-                        //    System.out.println("10");
-                        } catch (Exception e) {
-                            sucess = false;
-                            e.printStackTrace();
-                          //  System.out.println("11");
+                    if (!ac.cancel(args, event)){
+                        Object[] a = args;
+                        boolean success = true;
+
+
+                        for (int i = 0; i < ac.getArguments().size();i++) {
+                            CommandArgument argument = ac.getArguments().get(i);
+                            try {
+
+                                a[i] = getObject(args[i], argument);
+                            } catch (Exception e) {
+                                if (argument.isRequired())
+                                success = false;
+                                //e.printStackTrace();
+                            }
                         }
 
+
+
                         try {
-                            ac.action(a, event, sucess);
-                            //System.out.println("12");
+                            ac.action(a, event, success);
                         } catch (Exception e) {
                             System.err.println("An error occurred while executing the command " + c.getInvoke() + ": " + e.getMessage());
                             e.printStackTrace();
@@ -100,49 +91,39 @@ public class CommandHandler {
 
 
 
-    public Object[] getObjects(String[] args, Command command) throws Exception {
 
 
-        Object[] result = new Object[command.getArguments().size()];
+    public Object getObject(String arg, CommandArgument argument) throws Exception {
 
-        for (int i = 0; i < command.getArguments().size(); i++) {
+            switch (argument.type) {
+                case WORD:
+                case STRING:
+                    return arg;
 
-            CommandArgument argument = command.getArguments().get(i);
+                case BOOLEAN:
+                    if (arg.equals("1") || arg.equals("true") || arg.equals("yes"))
+                        return true;
+                    else if (arg.equals("0") || arg.equals("false") || arg.equals("no"))
+                        return false;
+                    else {
+                        throw new Exception();
+                    }
 
-            if (argument.isRequired()){
-                if (args.length < i +1 ) throw new Exception();
-                switch (argument.type){
-                    case WORD:
-                    case STRING:
-                        result[i] = args[i];
-                        break;
-                    case BOOLEAN:
-                        if (args[i].equals("1") || args[i].equals("true") || args[i].equals("yes"))
-                            result[i] = true;
-                        else if (args[i].equals("0") || args[i].equals("false") || args[i].equals("no"))
-                            result[i] = false;
-                        else {
-                            throw new Exception();
-                        }
-                        break;
-                    case INTEGER:
-                        System.out.println("int " + args[i]);
-                        int arg = Integer.parseInt(args[i]);
-                        result[i] = arg;
-                        break;
-                    case USER_MENTION:
-                    case CHANNEL_MENTION:
-                    case ROLE_MENTION:
-                        String id = args[i].replace("<@","").replace("<#", "").replace("<@&", "").replace(">", "");
-                        args[i] = id;
-                        break;
+                case INTEGER:
+                    int i = Integer.parseInt(arg);
+                    return i;
 
-                }
+                case USER_MENTION:
+                case CHANNEL_MENTION:
+                case ROLE_MENTION:
+                    String id = arg.replace("<@&", "").replace("<@!", "").replace("<#", "").replace(">", "");
+                    return id;
+
             }
+            throw new Exception();
 
-        }
-        return result;
     }
+
 
 
     public void addCommands(Command... c){
