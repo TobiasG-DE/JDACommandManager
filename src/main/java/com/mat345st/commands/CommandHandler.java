@@ -1,8 +1,11 @@
 package com.mat345st.commands;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,7 +30,7 @@ public class CommandHandler {
         this.listener = new CommandListener(prefix, this);
     }
 
-    public void handle(String[] args, MessageReceivedEvent event) {
+     void handle(String[] args, MessageReceivedEvent event) {
         String invoke = args[0].toLowerCase();
         args = Arrays.copyOfRange(args, 1, args.length);
 
@@ -75,6 +78,7 @@ public class CommandHandler {
                         try {
                             ac.action(a, event, success);
                         } catch (Exception e) {
+                            ac.error(args, event);
                             System.err.println("An error occurred while executing the command " + c.getInvoke() + ": " + e.getMessage());
                             e.printStackTrace();
                         }
@@ -93,7 +97,7 @@ public class CommandHandler {
 
 
 
-    public Object getObject(String arg, CommandArgument argument) throws Exception {
+    private Object getObject(String arg, CommandArgument argument) throws Exception {
 
             switch (argument.type) {
                 case WORD:
@@ -143,5 +147,44 @@ public class CommandHandler {
 
     public String getPrefix() {
         return prefix;
+    }
+
+    // Command Configs
+
+    private Color error_color = Color.RED;
+    private Color embed_color = Color.GRAY;
+    private String foother_text = "";
+    private String foother_url = null;
+
+    public void setErrorColor(Color error_color) {
+        this.error_color = error_color;
+    }
+
+    public Color getErrorColor() {
+        return error_color;
+    }
+
+    public void setEmbedColor(Color embed_color) {
+        this.embed_color = embed_color;
+    }
+
+    public Color getEmbedColor() {
+        return embed_color;
+    }
+
+    public void setFootherText(String foother_text) {
+        this.foother_text = foother_text;
+    }
+
+    public String getFootherText() {
+        return foother_text;
+    }
+
+    public void setFootherUrl(String foother_url) {
+        this.foother_url = foother_url;
+    }
+
+    public String getFootherUrl() {
+        return foother_url;
     }
 }

@@ -17,16 +17,16 @@ public abstract class AdvancedCommand extends Command {
     }
 
     @Override
-    public abstract boolean cancel(String[] args, MessageReceivedEvent e);
+    public abstract boolean cancel(String[] args, MessageReceivedEvent event);
 
     @Override
-    public void action(String[] args, MessageReceivedEvent e) throws Exception{}
+    public void action(String[] args, MessageReceivedEvent event) throws Exception{}
 
 
     public abstract void action(Object[] args, MessageReceivedEvent e, boolean successfully_casted) throws Exception;
 
     @Override
-    public abstract void error(String[] args, MessageReceivedEvent e);
+    public abstract void error(String[] args, MessageReceivedEvent event);
 
     @Override
     public abstract void setArguments();

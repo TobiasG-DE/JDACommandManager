@@ -1,14 +1,13 @@
 package com.mat345st.commands;
 
-import jdk.nashorn.internal.objects.Global;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -21,9 +20,9 @@ import java.util.List;
 
 public abstract class Command {
 
-
     private static final Color ERROR_COLOR = Color.RED;
-    private static final String FOOTHER_TEXT = "Command usage";
+    private static final String ERROR_FOOTHER_TEXT = "Command error";
+    private static final String ERROR_TITLE = "Usage error";
 
 
     private List<CommandArgument> arguments = new ArrayList<>();
@@ -46,46 +45,37 @@ public abstract class Command {
     /**
      *
      * @param args the given arguments
-     * @param e    the message received event
+     * @param event    the message received event
      * @return     if the command have to be executed
      */
-    public abstract boolean cancel(String[] args, MessageReceivedEvent e);
+    public abstract boolean cancel(String[] args, MessageReceivedEvent event);
 
 
     /**
      *
      * @param args      the given arguments
-     * @param e         the message received event
+     * @param event         the message received event
      * @throws Exception
      */
 
-    public abstract void action(String[] args, MessageReceivedEvent e) throws Exception;
+    public abstract void action(String[] args, MessageReceivedEvent event) throws Exception;
 
-
-    /*
-     *
-     * @param args      the given arguments
-     * @param e         the message received event
-     * @param casted    if the arguments could be casted
-     * @throws Exception
-     */
-    //public abstract void action(String[] args, MessageReceivedEvent e, boolean casted) throws Exception;
 
 
     /**
-     * when the command was cancelled
+     * when the command was cancelled or an exception was threw
      *
      * @param args the arguments
-     * @param e    the message received event
+     * @param event    the message received event
      */
 
-    public abstract void error(String[] args, MessageReceivedEvent e);
+    public abstract void error(String[] args, MessageReceivedEvent event);
 
 
 
 
     public abstract void setArguments();
-    private String getUsageString(){
+    private String getUsage(){
         StringBuilder builder =  new StringBuilder().append(handler.getPrefix() + invoke);
         arguments.stream().forEach(a -> builder.append(" " + a.getUsage()));
         return builder.toString();
@@ -97,18 +87,29 @@ public abstract class Command {
     }
 
 
-
-    protected EmbedBuilder help(String message) {
-        return (new EmbedBuilder()
-                .setColor(ERROR_COLOR)
-                .setTitle("Error")
-                .setDescription(message)
-                .setFooter(FOOTHER_TEXT ,null));
+    protected void sendEmbed(Color color, String title, String description, String foother_text, String foother_url){
+        getChannel().sendMessage(
+                new EmbedBuilder()
+                        .setColor(color)
+                        .setTitle(title)
+                        .setDescription(description)
+                        .setFooter(foother_text, foother_url)
+                        .build()
+        ).queue();
     }
 
-    protected EmbedBuilder help(){
-        return help(getUsageString());
+    protected void sendError(String message){
+       sendEmbed(handler.getErrorColor(), "Command error", message, handler.getFootherText(), handler.getFootherUrl());
     }
+
+    protected void sendError(){
+        sendError(getUsage());
+    }
+
+    protected void sendFeedback(String title, String message){
+        sendEmbed(handler.getEmbedColor(), title, message, handler.getFootherText(), handler.getFootherUrl());
+    }
+
 
 
     /**
@@ -127,7 +128,6 @@ public abstract class Command {
         this.handler = handler;
     }
 
-
     public String getInvoke() {
         return invoke;
     }
@@ -139,4 +139,7 @@ public abstract class Command {
     public List<ChannelType> getChannelTypes() {
         return channelTypes;
     }
+
+    public TextChannel getChannel(){return last_event.getTextChannel();}
 }
+
