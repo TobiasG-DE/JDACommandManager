@@ -1,5 +1,6 @@
 # JDACommandManager
-manage the added commands, checks the arguments und cast it to the argument objects
+
+A command manager made for jda 4
 
 
 ## Create the command handler
@@ -13,24 +14,26 @@ CommandHandler commandHandler = new CommandHandler(".");
 jdabuilder.addEventListeners(commandHandler.getListener());
 ```
 
-## Create a command
+## Setup a command
+
+#### Create a command
 ```java
 public class SayCommand extends Command {
 }
 ```
 
-## Create a advanced command
+#### Create a advanced command
 ```java
 public class MsgCommand extends AdvancedCommand {
 }
 ```
 
-## Add commands
+#### Add commands
 ```java
 commandHandler.addCommands(new MsgCommand(), new SayCommand());
 ```
 
-## Command class methods to implement:
+#### Command class methods to implement:
 
 - `public boolean cancel(String[] args, MessageReceivedEvent event){}`
 
@@ -48,11 +51,11 @@ commandHandler.addCommands(new MsgCommand(), new SayCommand());
 - `public void setArguments(){}`
 - `public void setChannelTypes(){}`
 
-   called on creating command. Can be used to set the command arguments and set the channel types which can trigger the command
+   called on creating command. Can be used to [set the command arguments](#set-the-command-arguments) and [set the channel types](#set-the-channel-types) which can trigger the command
    
 
 
-### Set the command arguments
+#### Set the command arguments
 
 
 * name = the function of the argument
@@ -63,7 +66,19 @@ addArgument("user", true, CommandArgument.ArgumentType.USER_MENTION);
 addArgument("text", true, CommandArgument.ArgumentType.STRING);
 ```
 
-### Set the channel types
+##### Command argument types
+Type | Example | Object
+--- | --- | ---
+WORD |
+STRING |
+USER_MENTION |
+CHANNEL_MENTION |
+ROLE_MENTION |
+INTEGER |
+BOOLEAN |
+
+
+#### Set the channel types
 
 ```java
 addChannelType(ChannelType.TEXT);
