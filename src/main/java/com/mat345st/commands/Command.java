@@ -63,7 +63,7 @@ public abstract class Command {
 
 
     /**
-     * when the command was cancelled or an exception was threw
+     * when the command was cancelled or an exception was thrown
      *
      * @param args the arguments
      * @param event    the message received event
