@@ -3,16 +3,25 @@
 A command manager made for jda 4
 
 
-## Create the command handler
+## Setup a command handler
+
+##### Create the command handler
+- set the prefix
 ```java
 CommandHandler commandHandler = new CommandHandler(".");
 ```
 
-
-## Add the listener
+#### Add the listener
 ```java
 jdabuilder.addEventListeners(commandHandler.getListener());
 ```
+
+#### Add commands
+```java
+commandHandler.addCommands(new MsgCommand(), new SayCommand());
+```
+
+---
 
 ## Setup a command
 
@@ -26,11 +35,6 @@ public class SayCommand extends Command {
 ```java
 public class MsgCommand extends AdvancedCommand {
 }
-```
-
-#### Add commands
-```java
-commandHandler.addCommands(new MsgCommand(), new SayCommand());
 ```
 
 #### Command class methods to implement:
