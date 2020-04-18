@@ -1,6 +1,6 @@
 # JDACommandManager
 
-A command manager made for jda 4
+A command manager made for [JDA](https://github.com/DV8FromTheWorld/JDA) 4
 
 
 ## Setup a command handler
