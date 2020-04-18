@@ -69,13 +69,13 @@ addArgument("text", true, CommandArgument.ArgumentType.STRING);
 ##### Command argument types
 Type | Example | Object
 --- | --- | ---
-WORD |
-STRING |
-USER_MENTION |
-CHANNEL_MENTION |
-ROLE_MENTION |
-INTEGER |
-BOOLEAN |
+WORD | set | string
+STRING |"any message" | string
+USER_MENTION | @username | string (user ID) 
+CHANNEL_MENTION | #channelname | string (channel ID) 
+ROLE_MENTION | @rolename | string (role ID) 
+INTEGER | 10 | Integer
+BOOLEAN | true/1 | Boolean 
 
 
 #### Set the channel types
