@@ -29,6 +29,9 @@ hs_err_pid*
 ./target
 ./target/*
 
+out/
+out/*
+
 ./src/main/java/com/mat345st/core/*
 ./src/main/java/com/mat345st/core
 pom.xml
