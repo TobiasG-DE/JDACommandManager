@@ -7,6 +7,7 @@
     <groupId>com.mat345st.jda</groupId>
     <artifactId>JDACommands</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
 
     <repositories>
@@ -27,7 +28,7 @@
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
             <version>4.1.0_81</version>
-            <type>pom</type>
+            
         </dependency>
         <dependency>
             <groupId>com.github.HayateLaTech</groupId>
