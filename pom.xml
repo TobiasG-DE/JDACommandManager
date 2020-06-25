@@ -67,7 +67,6 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>de.chris.easychannel.content.EasyChannel</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
