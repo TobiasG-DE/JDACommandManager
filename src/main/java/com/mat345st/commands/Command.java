@@ -5,11 +5,9 @@ import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Created by mat345st on 13.04.2020 / 14:14
@@ -17,7 +15,6 @@ import java.util.List;
  *
  * @author mat345st
  */
-
 public abstract class Command {
 
     private static final Color ERROR_COLOR = Color.RED;
@@ -40,8 +37,6 @@ public abstract class Command {
         setChannelTypes();
     }
 
-
-
     /**
      *
      * @param args the given arguments
@@ -49,7 +44,6 @@ public abstract class Command {
      * @return     if the command have to be executed
      */
     public abstract boolean cancel(String[] args, MessageReceivedEvent event);
-
 
     /**
      *
@@ -60,21 +54,16 @@ public abstract class Command {
 
     public abstract void action(String[] args, MessageReceivedEvent event) throws Exception;
 
-
-
     /**
      * when the command was cancelled or an exception was thrown
      *
      * @param args the arguments
      * @param event    the message received event
      */
-
     public abstract void error(String[] args, MessageReceivedEvent event);
 
-
-
-
     public abstract void setArguments();
+    
     private String getUsage(){
         StringBuilder builder =  new StringBuilder().append(handler.getPrefix() + invoke);
         arguments.stream().forEach(a -> builder.append(" " + a.getUsage()));
@@ -82,6 +71,7 @@ public abstract class Command {
     }
 
     public abstract void setChannelTypes();
+    
     protected void addChannelType(ChannelType type){
         channelTypes.add(type);
     }
@@ -119,7 +109,6 @@ public abstract class Command {
      * @param required  if the argument have to be used
      * @param type      the argument type
      */
-
     protected void addArgument(String name, boolean required, CommandArgument.ArgumentType type){
         arguments.add(new CommandArgument(name, required, type));
     }
