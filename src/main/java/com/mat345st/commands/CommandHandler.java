@@ -17,7 +17,6 @@ import java.util.List;
  *
  * @author mat345st
  */
-
 public class CommandHandler {
 
     private CommandListener listener;
@@ -54,8 +53,6 @@ public class CommandHandler {
                         c.error(args, event);
                 }else {
                     AdvancedCommand ac = (AdvancedCommand) c;
-
-
                     if (!ac.cancel(args, event)){
                         Object[] a = args;
                         boolean success = true;
@@ -72,9 +69,6 @@ public class CommandHandler {
                                 //e.printStackTrace();
                             }
                         }
-
-
-
                         try {
                             ac.action(a, event, success);
                         } catch (Exception e) {
@@ -98,7 +92,6 @@ public class CommandHandler {
 
 
     private Object getObject(String arg, CommandArgument argument) throws Exception {
-
             switch (argument.type) {
                 case WORD:
                 case STRING:
@@ -128,8 +121,6 @@ public class CommandHandler {
 
     }
 
-
-
     public void addCommands(Command... c){
         for (Command command : c) {
             if (!commands.containsValue(command)) {
@@ -140,7 +131,6 @@ public class CommandHandler {
         }
     }
 
-
     public CommandListener getListener() {
         return listener;
     }
@@ -150,7 +140,6 @@ public class CommandHandler {
     }
 
     // Command Configs
-
     private Color error_color = Color.RED;
     private Color embed_color = Color.GRAY;
     private String foother_text = "";
