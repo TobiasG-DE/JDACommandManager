@@ -29,7 +29,7 @@ public class CommandHandler {
         this.listener = new CommandListener(prefix, this);
     }
 
-     void handle(String[] args, MessageReceivedEvent event) {
+    void handle(String[] args, MessageReceivedEvent event) {
         String invoke = args[0].toLowerCase();
         args = Arrays.copyOfRange(args, 1, args.length);
 
@@ -37,8 +37,6 @@ public class CommandHandler {
             Command c = commands.get(invoke);
 
             if (c.getChannelTypes().size()==0 || c.getChannelTypes().contains(event.getChannelType())) {
-
-
                 c.last_event = event;
                 if (!(c instanceof AdvancedCommand)){
                     if (!c.cancel(args, event)){
@@ -57,11 +55,9 @@ public class CommandHandler {
                         Object[] a = args;
                         boolean success = true;
 
-
                         for (int i = 0; i < ac.getArguments().size();i++) {
                             CommandArgument argument = ac.getArguments().get(i);
                             try {
-
                                 a[i] = getObject(args[i], argument);
                             } catch (Exception e) {
                                 if (argument.isRequired())
@@ -81,10 +77,8 @@ public class CommandHandler {
                         ac.error(args, event);
                     }
                 }
-
             }
         }
-
     }
 
 
