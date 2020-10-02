@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  *
  * @author mat345st
  */
-
 public abstract class AdvancedCommand extends Command {
 
     public AdvancedCommand(String invoke) {
@@ -33,6 +32,5 @@ public abstract class AdvancedCommand extends Command {
 
     @Override
     public abstract void setChannelTypes();
-
 
 }
