@@ -16,7 +16,6 @@ import java.util.StringTokenizer;
  *
  * @author mat345st
  */
-
 public class CommandListener extends ListenerAdapter {
 
     String prefix;
@@ -34,8 +33,6 @@ public class CommandListener extends ListenerAdapter {
     }
 
     public String[] parse(String raw) {
-
-        //String content = raw.replaceFirst(prefix , "");
         String[] split = raw.split("\"");
         if (split.length < 3){
             return raw.split(" ");
@@ -51,16 +48,11 @@ public class CommandListener extends ListenerAdapter {
                 }else {
                     //2., 4., 6.,.. arg ("")
                     args.add(split[i]);
-
                 }
             }
             String[] a = new String[args.size()];
             args.toArray(a);
             return a;
         }
-
-
-
-        //return Arrays.copyOfRange(split, 1 , split.length);
     }
 }
